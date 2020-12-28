@@ -1,0 +1,53 @@
+{% extends 'courses/layout.html' %}
+
+{% block title %}
+    User Registration
+{% endblock %}
+
+{% block body %}
+<h3>[ <a href="{% url 'index' %}">Back</a> ]</h3>
+<div class="row">
+    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4">&nbsp;</div>
+    <div class="col-xs-10 col-sm-8 col-md-6 col-lg-4">
+        <h2>Registration</h2>
+
+        {% if message %}
+            <div id="message_zone">
+                <div class="alert {{ msgType }}" role="alert">{{ message }}</div>
+            </div>
+        {% endif %}
+
+        <form action="{% url 'register' %}" method="post">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <input class="form-control" name="firstname" placeholder="First name" required/>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" name="lastname" placeholder="Last name" required/>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" name="email" type="email" placeholder="Email" required/>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" name="username" placeholder="User name" required/>
+            </div>
+
+            <div class="form-group">
+                <input class="form-control" type="password" name="password" placeholder="Password" required/>
+            </div>
+            <div class="form-group">
+                <input class="form-control" type="password" name="confirmation" placeholder="Confirm Password">
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary">Register</button>
+            </div>
+        </form>
+    </div>
+    <div class="col-xs-1 col-sm-2 col-md-3 col-lg-4">&nbsp;</div>
+</div>
+{% endblock %}

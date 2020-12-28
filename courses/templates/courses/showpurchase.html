@@ -1,0 +1,78 @@
+{% extends 'courses/layout.html' %}
+{% load static %}
+
+{% block extramenu %}
+[ <a href="{% url 'index' %}">Available Courses</a> ]
+{% endblock %}
+
+{% block body %}
+	<section class="m-3 p-3">
+
+		<div id="message_zone" class="px-3 pt-2">
+		    <div class="alert alert-success" role="alert">
+		    	<span class="font-weight-bold">
+				 <h1 class="text-success">Thanks you, your order has been placed</h1><br>
+				 <p>Dear <strong>{{user.first_name }} {{user.last_name }}</strong>:</p>
+				 <p>Thank you for visiting us and making your purchase! We are glad that you have found what you are looking for.</p>
+				 <p>Our goal is that you are always satisfied. We hope to see you again. Have a great day!</p><br>
+				 <p>Sincerely,</p>
+				 <p>Your friends from "Play and Learn"</p>
+				</span>
+			</div>
+		</div>
+		<button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#modal-payment">See details</button>
+		<br><br>
+		[ <a href="{% url 'index' %}">Back to Home</a> ]
+	</section>
+	
+	<section class="row">
+		<div class="modal fade" id="modal-payment" tabindex="-1" role="dialog" aria-labelledby="modal-{{ o.id }}-Tittle" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h3 class="modal-title">Your order's in!</h3>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group w18">
+							<div class="card">
+								<div class="card-header">
+									<div class="d-flex flex-row justify-content-between">
+										<div class="px-2">
+											 <small>{% now "jS F Y H:i" %}</small>
+										</div>
+									</div><br>
+									<div class="d-flex flex-row justify-content-between">
+										<div class="px-2">
+											Transaction Status:
+										</div>
+										<div class="px-2 font-weight-bold">
+											Successful
+										</div>
+									</div>
+									<br>
+									<div class="d-flex flex-row justify-content-between">
+										<div class="px-2">
+											<p class="font-weight-bold">Your payment has been completed successfully. In the meantime, you can continue to view our available courses. We will have new topics very soon.</p>
+											<br><p>Your friends from <strong>"Play and Learn"</strong></p>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<script>
+		$('#modal-payment').modal();
+	</script>
+
+{% endblock %}

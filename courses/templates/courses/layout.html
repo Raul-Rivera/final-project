@@ -1,0 +1,81 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{% block title %}Play and Learn{% endblock %}</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1" >
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <style media="all"></style>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+
+        <script type='text/javascript' >
+            var csrftoken = '';
+        </script>
+
+        <script src="{% static 'courses/js/kids.js' %}"></script>
+        <link rel="stylesheet" href="{% static 'courses/css/kids.css' %}" >
+
+        <script src="https://icons8.com/icon/13012/buying">Buying icon by Icons8</script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    </head>
+    <body>
+        <header>
+            <div class="MyContainer" rol="main">
+                <center>
+                <span>
+                    <i class="fas fa-laptop-code fa-3x"></i>&nbsp;
+                    <i class="fas fa-user-graduate fa-3x"></i>
+                </span>
+                <h1>&nbsp;&nbsp;Play and Learn</h1><br>
+                <h3>Interactive courses, designed for children's learning</h3>
+                </center>
+                {% if user.is_authenticated %}
+                <div class="float-right mr-5 mt-3">
+                    <a href="{% url 'displaycart' %}" class="nounderline text-white">
+                        <img src="https://img.icons8.com/color/70/000000/shopping-cart-loaded.png"/> ({{ user.get_activeOrders.count }})
+                    </a>
+                </div>
+                {% endif %}
+
+            </div>
+
+        </header><br>
+
+        <div class="MyContainer">
+            {% if user.is_authenticated %}
+            <h4>Welcome <strong>{{user.first_name }} {{user.last_name }}</strong></h4>
+            <h4>[ <a href="{% url 'logout' %}">Sign out</a> ]
+            {% block extramenu %}
+            [ <a href="{% url 'displaycart' %}">My Cart</a> ]</h4>
+            {% endblock %}
+            {% endif %}
+
+            {% if not user.is_authenticated %}
+            {% block loginmenu %}
+            <h4>[ <a href="{% url 'login' %}">Sign in</a> ]</h4>
+            {% endblock %}
+            {% endif %}
+
+            {% block body %}
+            {% endblock %}
+        </div>
+
+        <form action="{% url 'addcart' %}" method="post">{% csrf_token %}</form>
+
+        <footer>
+            <div class="MyContainer">
+                <center>
+                <h4>"Education is the most powerful weapon which you can use to change the world" - Nelson Mandela</h4>
+                <h4>CS50's - Raul J. Rivera - 2020</h4><br>
+            </center>
+            </div>
+        </footer>
+    </body>
+</html>

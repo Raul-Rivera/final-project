@@ -1,0 +1,220 @@
+{% extends 'courses/layout.html' %}
+{% load static %}
+{% load range %}
+
+{% block body %}
+	<section class="row align-middle">
+		<div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">&nbsp;</div>
+		<div class="col-xs-4 col-sm-4 col-md-6 col-lg-8 col-xl-8 mb-1" align="center">
+    		<h3>Available Courses</h3>
+		</div>
+		<div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">&nbsp;</div>
+	</section>
+
+	<section class="row">
+		<div class="col-xs-4 col-sm-4 col-md-3 col-lg-2 col-xl-2">
+			<div class="card w18">
+				<div class="card-header">
+					<h6 class="card-title">Special Filter</h6>
+					{% if not categories %}
+					<h4 class="card-title">Nothing to Filter</h4>
+					{% endif %}
+				</div>
+
+				{% if categories %}
+				<ul class="list-group list-group-flush">
+					<li  class="list-group-item">
+						<label>
+							<input type="checkbox" class="display-6" id="card-link-0" name="courseCategories" data-categoryid="0" value="0" checked>
+								{{ settings.FILTER_INITIAL_NAME }}All Categories
+						</label>
+					</li>
+
+					{% for c in categories %}
+					<li  class="list-group-item">
+						<label>
+							<input type="checkbox" class="display-6" id="card-link-{{c.id}}" name="courseCategories" data-categoryid="{{c.id}}" value="{{c.id}}" checked>
+								{{ c.name }}
+						</label>
+					</li>
+					{% endfor %}
+
+				</ul>
+				{% endif %}
+
+				<div class="form-horizontal mt-2 p-2">
+					<div class="form-group" align="center">
+						<input id="filterString" class="form-control" type="text" value="" placeholder="Word filter">
+						<button id="filterButton" class="btn btn-primary mt-2">Filter</button>
+						<button id="clearButton" class="btn btn-secondary mt-2">Erase</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	    <div class="col-xs-8 col-sm-8 col-md-9 col-lg-10 col-xl-10">
+			<div class="card-columns">
+
+				{% if not catalog %}
+				<div class="card w18 card-body">
+					<div>
+						<h5 class="card-title">No courses available yet.</h5>
+				    	<p class="card-text">
+				    	Go to admin, please.
+				    	</p>
+					</div>
+				</div>
+			 	{% endif %}
+
+				{% for c in catalog %}
+				<div class="card w18 p-3"
+					 id="card-{{c.id}}"
+					 data-courseid="{{c.id}}"
+				     data-categories="[{% for g in c.categories.all %}{{g.id}}{% if not forloop.last%},{% endif %}{% endfor %}]"
+				     data-selector="course-entry"
+				     data-content="{{c.name}} - {{c.description}}">
+					<img class="card-img-top img-fluid" src="/media/{{c.image}}" alt="{{c.name}}">
+					<div class="card-body">
+						<h5 class="card-title">
+							{{c.name}}
+					    	<div><small class="text-muted">By&nbsp;{{c.provider}}</small></div>
+						</h5>
+			    		<div style="height: 7rem">
+			    			<div>
+			    				{{c.description|truncatewords_html:15 }}
+			    			</div>
+			    			<div class="mt-1">
+
+								{% if user.is_authenticated %}
+								<a href="{% url 'coursereview' idcourse=c.id %}" class="text-info font-weight-bold">Course Reviews</a>
+								{% else %}
+								<span class="text-info">Login to see reviews</span>
+								{% endif %}
+
+					    		{% if not c.reviews.all %}
+								<br>( <small>No reviews yet</small> )
+								{% else %}
+			                    ( <span class="text-info">{%if c.avgRating|floatformat:1 != "0.0" %}{{ c.avgRating|floatformat:1 }}{% else %}0{% endif %}  /5</span>)<br>
+			                    <span class="starsBox">
+			                    	<span>
+			                    	{% for k in 0|range:c.get_avgRating_int %}
+			                        <i class="fa fa-star checked"></i>
+			                        {% endfor %}
+			                    	{% for k in c.get_avgRating_int|range:5 reversed %}
+			                        <i class="fa fa-star"></i>
+			                        {% endfor %}
+			                    	</span>
+			                    </span>
+								{% endif %}
+
+							</div>
+			    		</div>
+					</div>
+					<div class="card-footer">
+						{% if user.is_authenticated %}
+				    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-{{ c.id }}">See details</button>
+				    	{% else %}
+				    	<a href="{% url 'login' %}" class="text-info font-weight-bold">Login to see details</a>
+			    		{% endif %}
+			    	</div>
+				</div>
+
+
+				<form action="{% url 'addcart' %}" method="post">
+				{% csrf_token %}
+
+				<div class="modal fade" id="modal-{{ c.id }}" tabindex="-1" role="dialog" aria-labelledby="modal-{{ c.id }}-Tittle" aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content" style="width: 130%">
+							<div class="modal-header" >
+								<h4 class="modal-title">
+									{{c.name}} <small class="text-muted">By {{c.provider}}</small>
+								</h4>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<div class="form-group">
+									<div class="card w18 card-body">
+										<img class="card-img-top" src="/media/{{c.image}}" alt="{{c.name}}">
+								    	<p class="mt-3">
+								    		{{ c.description }}
+								    	</p>
+									</div>
+									<div class="card-footer">
+										<strong>Price:</strong>&nbsp;
+										$&nbsp;<span id="modal-{{ c.id }}-coursePrice" value="{{ c.price }}">{{ c.price }}0</span>
+										&nbsp;&nbsp;
+										{% if c.maxFreeAdds > 0 %}
+										<span class="text-success">Hey! Select <span id="modal-{{ c.id }}-courseAdds" value="{{c.maxFreeAdds}}">{{c.maxFreeAdds}}</span> of {{c.maxFreeAdds}} free add(s).</span>
+										{% endif %}
+									</div>
+									<input id="idcourse-{{ c.id }}" name="idcourse" value="{{ c.id }}" hidden>
+								</div>
+
+								{% if c.adds.all %}
+								<div class="form-group">
+									<div class="form-group">
+										<strong class="mb-2">Don't miss out on some of our free additions:</strong><br><br>
+										{% with numcols=0 %}
+										<table class="addsTable">
+										<tr>
+
+										{% for a in c.adds.all %}
+											{% cycle 1 2 as numcols silent %}
+											<td class="ch_{{ numcols }}">
+												<div class="checkbox">
+													<label>
+														<input type="checkbox" class="check-{{c.id}}" data-addid="{{a.id}}" data-courseid="{{c.id}}"data-extraprice="{{ a.extraprice }}" data-name="{{ a.name }}" data-free="{{ a.free }}" value="{{ a.id }}-{{ a.extraprice }}" name="courseAdds" id="ca-{{ c.id }}-{{a.id}}">
+														&nbsp;{{ a.name }}
+														&nbsp;{% if a.free %}<small class="text-success">[Free]</small>{% endif %}
+														{% if a.extraprice != 0 %}
+														(+${{ a.extraprice }}0)
+														{% endif %}
+													</label>
+												</div>
+											</td>
+
+										{% if numcols == 2 %}
+										</tr>
+										{% endif %}
+
+										{% endfor %}
+
+										{% if numcols == 1 %}
+											<td>&nbsp;</td>
+										</tr>
+										{% endif %}
+
+										</table>
+
+										{% resetcycle %}
+										{% endwith %}
+
+									</div>
+								</div>
+
+								{% else %}
+								<h5 class="ml-2">
+									<small class="text-muted">No additions.</small>&nbsp;
+									{% if c.maxFreeAdds > 0 %}
+									<small class="text-danger">Please contact support, you must be offered {{c.maxFreeAdds}} free additions.</small>
+									{% endif%}
+
+								</h5>
+								{% endif %}
+
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+								<button type="submit" class="btn btn-primary">Add to My Cart</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				</form>
+				{% endfor %}
+			</div>
+	    </div>
+	</section>
+{% endblock %}

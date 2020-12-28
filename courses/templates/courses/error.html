@@ -1,0 +1,18 @@
+{% extends 'courses/layout.html' %}
+
+{% block title %}
+    Error
+{% endblock %}
+
+{% block body %}
+<section class="m-3">
+	<h1>Error</h1>
+	{% if message %}
+	<div id="message_zone" class="p-3">
+	    <div class="alert {{ msgType }}" role="alert">{{ message }}</div>
+	</div>
+	{% endif %}
+
+    [&nbsp;<a href="{% url 'index' %}">Back to Home</a>&nbsp;]
+</section>
+{% endblock %}

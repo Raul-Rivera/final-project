@@ -1,0 +1,154 @@
+{% extends 'courses/layout.html' %}
+{% load static %}
+
+{% block extramenu %}
+[ <a href="{% url 'index' %}">Available Courses</a> ]
+{% endblock %}
+
+{% block body %}
+	<div align="center">
+		<h2>Your Shopping Cart&nbsp;<small> on {% now "jS F Y H:i" %}</small></h2>
+	</div>
+
+	{% if message %}
+	<div id="message_zone">
+	    <div class="alert {{ msgType }}" role="alert">{{ message }}</div>
+	</div>
+	{% endif %}
+
+	<section class="row">
+		<div class="col-xs-2 col-sm-2 col-md-2 col-lg-2 col-xl-1"></div>
+	    <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-10">
+
+			{% if not orders %}
+			<div class="card card-body">
+				<div>
+					<h4 class="card-title">No courses in your Shopping Cart.</h4>
+			    	<p class="card-text">
+			    	If you want to buy ... go to the <a href="{% url 'index' %}">available courses.</a>
+			    	</p>
+				</div>
+			</div>
+
+			{% else %}
+			<span class="text-info font-weight-bold">You have added {{ orders.count }} course(s) to your cart.</span>
+		 	{% endif %}
+
+			{% for o in orders %}
+			<center>
+			<form action="{% url 'removecart' %}" method="post">
+				{% csrf_token %}
+				<input id="idorder-{{ o.id }}" name="idorder" value="{{ o.id }}" hidden>
+
+				<div class="card my-3" id="order-{{o.id}}"style="width: 80%">
+					<div class="card-header">
+						<h6>Order # {{o.get_orderCode}}&nbsp;on {{o.datetime}}</h6>
+					</div>
+					<div class="card-body">
+						<div class="d-flex flex-row px-3 flex-wrap">
+							<div class="pr-3">
+								<img class="card-img-left img-fluid" src="/media/{{o.items.all.first.course.image}}" alt="{{o.items.all.first.course.name}}"><br>
+								<small class="text-muted">By {{o.items.all.first.course.provider.name}}</small>
+							</div>
+							<div class="">
+								<div class="d-flex flex-row justify-content-between">
+									<div class="px-2">
+										<h4 class="card-title">Course: {{o.items.all.first.course.name}}</h4>
+									</div>
+									<div class="px-2">
+										<h4 class="card-title">$ {{o.items.all.first.course.price|floatformat:2}}</h4>
+									</div>
+								</div>
+								<div class="d-flex flex-row">
+				    				<div class="px-2"><span class="text-info font-weight-bold">Selected additions:</span></div>
+				    			</div><br>
+
+					    		{% for s in o.items.all.first.subitems.all %}
+					    		<div class="d-flex flex-row justify-content-between">
+						    		<div class="px-2">1&nbsp;{{s.add.name}}</div>
+						    		<div class="px-2">
+
+										{% if s.add.free %}
+										<span class="text-success">Free</span>
+										{% else %}
+										$ {{s.extraprice|floatformat:2 }}
+										{% endif %}
+
+						    		</div>
+					    		</div>
+						    	{% endfor %}
+
+					    	</div>
+						</div>
+			    	</div>
+			    	<div class="card-footer">
+			    		<button href="{% url 'removecart' %}" class="btn btn-secondary ml-4" type="submit">Delete</button>
+				    	<button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#modal-{{ o.id }}">Check out</button>
+			    		<strong><span class="ml-5 display-5">Total amount: $ {{o.price}}0</span></strong>
+			    	</div>
+				</div>
+			</form>
+		</center>
+			<div class="modal fade" id="modal-{{ o.id }}" tabindex="-1" role="dialog" aria-labelledby="modal-{{ o.id }}-Tittle" aria-hidden="true">
+				<div class="modal-dialog" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">Pay order # {{o.get_orderCode}}</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+						</div>
+						<div class="modal-body">
+							<div class="form-group w18">
+								<div class="card">
+									<div class="card-header">
+										<h4>{{ o.items.all.first.course.name }} <small>by {{o.items.all.first.course.provider.name}}</small></h4>
+									</div>
+									<div class="card-body">
+										<div class="d-flex flex-row justify-content-between">
+											<div class="px-2">
+												1 Course price</div>
+											<div class="px-2 font-weight-bold">
+												${{o.items.all.first.course.price}}0
+											</div>
+										</div>
+										<div class="d-flex flex-row justify-content-between">
+											<div class="px-2">
+												{{o.items.all.first.get_subitemsPrice.numcharged}} Charged adds price</div>
+											<div class="px-2 font-weight-bold">
+												${{o.items.all.first.get_subitemsPrice.extraprices}}0
+											</div>
+										</div>
+										<div class="d-flex flex-row justify-content-between">
+											<div class="px-2">
+												{{o.items.all.first.get_subitemsPrice.numfree}} Free adds
+											</div>
+											<div class="px-2 font-weight-bold">
+												$0.00
+											</div>
+										</div>
+									</div>
+									<div class="card-footer">
+										<div class="d-flex flex-row justify-content-between">
+											<div class="px-2 font-weight-bold">Total amount to pay</div>
+											<div class="px-2 font-weight-bold">${{o.price}}0</div>
+										</div>
+									</div>
+								</div>
+								<input id="orderid-{{ o.id }}" name="orderid" value="{{ o.id }}" hidden>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+
+							<a href="{% url 'showpurchase' %}" class="text-info font-weight-bold">Pay the Curse</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			</form>
+			{% endfor %}
+
+	    </div>
+	</section>
+{% endblock %}

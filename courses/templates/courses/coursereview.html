@@ -1,0 +1,98 @@
+{% extends 'courses/layout.html' %}
+{% load static %}
+{% load range %}
+
+
+{% block extramenu %}
+[ <a href="{% url 'index' %}">Available Courses</a> ]
+{% endblock %}
+
+{% block body %}
+    <section class="row">
+    	<div class="col-xs-6 col-sm-12"> </div>
+        <div class="col-xs-6 col-sm-12">
+        	<center><h3>Course review</h3></center>
+
+        	<div style2="width:3rem">
+
+            <table>
+                <tr>
+                    <th>
+        			<div class="card my-3" style="width: 99%">
+        				<div class="card-body">
+        					<div class=" d-flex flex-row justify-content-between">
+        						<div class="pr-3">
+        							<img class="card-img-left" style="width: 100%" src="/media/{{course.image}}" alt="{{course.name}}"><br>
+        							<small class="text-muted">By {{course.provider.name}}</small>
+        						</div>
+        						<div class="px-2">
+        							<center><h4 class="card-title">{{course.name}}</h4></center>
+        							<h5>{{course.description}}</h5>
+        						</div>
+        					</div>
+        		    	</div>
+        		    	<div class="card-footer">
+        					<h5 class="text-info">Give us a rating and a review.</h5>
+        					<br>
+        		            <form action="{% url 'coursereview' %}" method="post">
+        		            	{% csrf_token %}
+        		                <input name="idcourse" value="{{ course.id }}" hidden>
+        		                <div class="form-group">
+        		                    <h4>Your rating:</h4>
+        		                    <div class="starsBox" name="getUserRating" id="getUserRating">
+        		                        <i class="fa fa-star" data-rating=1></i>
+        		                        <i class="fa fa-star" data-rating=2></i>
+        		                        <i class="fa fa-star" data-rating=3></i>
+        		                        <i class="fa fa-star" data-rating=4></i>
+        		                        <i class="fa fa-star" data-rating=5></i>
+        		                        <input class="form-control" name="userrating" id="userrating" type="number" value="{% if userReview != None %}{{ userReview.rating}}{% else %}5{% endif %}" hidden>
+        		                        &nbsp;<button type="button" class="btn btn-secondary" id="clear">Clear</button>
+        		                    </div>
+        		                </div>
+        		                <div class="form-group">
+        		                    <h4 for="user_review">Your review:</h4>
+        		                    <textarea class="form-control" id="userreview" name="userreview" placeholder="" rows="3">{% if userReview != None and userReview.text != None %}{{ userReview.text}}{% endif %}</textarea>
+        		                </div>
+        		                <div class="form-group">
+        		                    <button type="submit" class="btn btn-primary" name="buttonAction" value="update">Update</button>&nbsp;&nbsp;
+        		                    <button type="submit" class="btn btn-danger" name="buttonAction" value="delete">Delete</button>
+        		                </div>
+        		            </form>
+        		            <div id="message_zone">
+        		                <div class="alert {{ msgType }}" role="alert">{{ msgText }}</div>
+        		            </div>
+        		    	</div>
+        			</div>
+                </th>
+                <th style="width: 40%">
+    		    {% if courseReviews %}
+    	        <center><h3>Reviews</h3></center>
+    	        <hr>
+    	        <br>
+    	        <ol>
+    	        {% for review in courseReviews %}
+    	            <li>{{ review.user.username }}: ( {{ review.rating }}/5 )&nbsp;
+    	            <span class="starsBox">
+    	            	<span>
+    	            	{% for k in 0|range:review.rating %}
+    	                <i class="fa fa-star checked"></i>
+    	            	{% endfor %}
+    	            	{% for k in review.rating|range:5 reversed %}
+    	                <i class="fa fa-star"></i>
+    	            	{% endfor %}
+    	        		</span>
+    	        	</span><br>
+    				<img src="https://img.icons8.com/bubbles/100/000000/edit-property.png"/>"<small>{{review.text}}</small>"
+    	            </li>
+    	        {% endfor %}
+    	        </ol>
+    	        <br>
+    		    {% endif %}
+                </th>
+            </table>
+
+			</div>
+		</div>
+  		<div class="col-xs-0 col-sm-0"> </div>
+	</section>
+{% endblock %}
