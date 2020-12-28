@@ -207,4 +207,28 @@ def displaycart(request):
 
 
 def showpurchase(request):
-    return render(request, "courses/showpurchase.html")
+	if request.method != "POST":
+		return render(request, "courses/error.html", {"msgType": "alert-danger", "message": "Only POST request allowed"})
+
+	orderId = request.POST.get('idorder', None)
+	if not orderId:
+		return render(request, "courses/error.html", {"msgType": "alert-danger", "message": "No id_order"})
+
+	try:
+		Order.objects.filter(pk=orderId).delete()
+	except IntegrityError:
+		return render(request, "courses/register.html", {"message": "Integrity error.", "msgType":"alert-warning"})
+
+	if request.method == "GET":
+		return render(request, "courses/error.html", {"msgType": "alert-danger", "message": "Only GET request allowed"})
+
+	if not request.user.is_authenticated:
+		return HttpResponseRedirect(reverse('login'))
+
+	try:
+		usrCurrent = User.objects.get(username=request.user.username)
+	except usrCurrent.DoesNotExist:
+		return render(request, "courses/error.html", {"msgType": "alert-danger", "message": "User do not exist."})
+
+	orders = Order.objects.filter(active=True,client=usrCurrent.id)
+	return render(request, "courses/showpurchase.html", {"orders":orders})
