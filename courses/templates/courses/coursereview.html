@@ -4,7 +4,7 @@
 
 
 {% block extramenu %}
-[ <a href="{% url 'index' %}">Available Courses</a> ]
+[ <a href="{% url 'index' %}#inicio">Available Courses</a> ]
 {% endblock %}
 
 {% block body %}
@@ -34,7 +34,7 @@
         		    	<div class="card-footer">
         					<h5 class="text-info">Give us a rating and a review.</h5>
         					<br>
-        		            <form action="{% url 'coursereview' %}" method="post">
+        		            <form action="{% url 'coursereview' %}#inicio" method="post">
         		            	{% csrf_token %}
         		                <input name="idcourse" value="{{ course.id }}" hidden>
         		                <div class="form-group">

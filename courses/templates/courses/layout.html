@@ -36,30 +36,43 @@
                 <h1>&nbsp;&nbsp;Play and Learn</h1><br>
                 <h3>Interactive courses, designed for children's learning</h3>
                 </center>
-                {% if user.is_authenticated %}
-                <div class="float-right mr-5 mt-3">
-                    <a href="{% url 'displaycart' %}" class="nounderline text-white">
-                        <img src="https://img.icons8.com/color/70/000000/shopping-cart-loaded.png"/> ({{ user.get_activeOrders.count }})
-                    </a>
-                </div>
-                {% endif %}
-
             </div>
+        </header>
 
-        </header><br>
+        <br>
+        <div class="card bg-dark text-white">
+          <img src="{% static 'courses/image/play.jpg' %}" class="card-img" alt="image">
+          <div class="card-img-overlay">
+            <h1 class="card-title" style="color: black;">Play and Learn</h1>
+            <h4 class="card-text" style="color: black;">&nbsp;&nbsp;&nbsp;Every course is hand-picked by people who know about kids, fun, and learning.
+    This is just the beginning. We’re adding new courses all the time to keep the delight and excitement turned up. Go ahead, it will be fun.</h4><br><br>
+            <h5 class="card-text" style="color: black;">Sincerely, Raul J. Rivera.</h5>
+          </div>
+        </div><br><br>
+        <a name="inicio"></a>
+
+        {% if user.is_authenticated %}
+        <div class="MyContainer">
+        <div class="float-right mr-5 mt-3">
+            <a href="{% url 'displaycart' %}#inicio" class="nounderline text-white">
+                <h4 style="color: black;"><img src="https://img.icons8.com/color/70/000000/shopping-cart-loaded.png"/> ({{ user.get_activeOrders.count }})</h4>
+            </a>
+        </div>
+        </div>
+        {% endif %}
 
         <div class="MyContainer">
             {% if user.is_authenticated %}
             <h4>Welcome <strong>{{user.first_name }} {{user.last_name }}</strong></h4>
-            <h4>[ <a href="{% url 'logout' %}">Sign out</a> ]
+            <h4>[ <a href="{% url 'logout' %}#inicio">Sign out</a> ]
             {% block extramenu %}
-            [ <a href="{% url 'displaycart' %}">My Cart</a> ]</h4>
+            [ <a href="{% url 'displaycart' %}#inicio">My Cart</a> ]</h4>
             {% endblock %}
             {% endif %}
 
             {% if not user.is_authenticated %}
             {% block loginmenu %}
-            <h4>[ <a href="{% url 'login' %}">Sign in</a> ]</h4>
+            <br><h4>[ <a href="{% url 'login' %}#inicio">Sign in</a> ]</h4>
             {% endblock %}
             {% endif %}
 

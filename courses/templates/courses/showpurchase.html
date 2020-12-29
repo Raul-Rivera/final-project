@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block extramenu %}
-[ <a href="{% url 'index' %}">Available Courses</a> ]
+[ <a href="{% url 'index' %}#inicio">Available Courses</a> ]
 {% endblock %}
 
 {% block body %}
@@ -22,9 +22,9 @@
 		</div>
 		<button type="button" class="btn btn-primary ml-4" data-toggle="modal" data-target="#modal-payment">See details</button>
 		<br><br>
-		[ <a href="{% url 'index' %}">Back to Home</a> ]
+		[ <a href="{% url 'index' %}#inicio">Back to Home</a> ]
 	</section>
-	
+
 	<section class="row">
 		<div class="modal fade" id="modal-payment" tabindex="-1" role="dialog" aria-labelledby="modal-{{ o.id }}-Tittle" aria-hidden="true">
 			<div class="modal-dialog" role="document">
