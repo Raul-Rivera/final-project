@@ -51,6 +51,7 @@
 				</div>
 			</div>
 		</div>
+
 	    <div class="col-xs-8 col-sm-8 col-md-9 col-lg-10 col-xl-10">
 			<div class="card-columns">
 
@@ -67,17 +68,17 @@
 
 				{% for c in catalog %}
 				<div class="card w18 p-3"
-					 id="card-{{c.id}}"
-					 data-courseid="{{c.id}}"
-				     data-categories="[{% for g in c.categories.all %}{{g.id}}{% if not forloop.last%},{% endif %}{% endfor %}]"
-				     data-selector="course-entry"
-				     data-content="{{c.name}} - {{c.description}}">
-					<img class="card-img-top img-fluid" src="/media/{{c.image}}" alt="{{c.name}}">
-					<div class="card-body">
-						<h5 class="card-title">
-							{{c.name}}
+					    id="card-{{c.id}}"
+					    data-courseid="{{c.id}}"
+				    data-categories="[{% for g in c.categories.all %}{{g.id}}{% if not forloop.last%},{% endif %}{% endfor %}]"
+				    data-selector="course-entry"
+				    data-content="{{c.name}} - {{c.description}}">
+						<img class="card-img-top img-fluid" src="/media/{{c.image}}" alt="{{c.name}}">
+						<div class="card-body" >
+							<h5 class="card-title">
+								{{c.name}}
 					    	<div><small class="text-muted">By&nbsp;{{c.provider}}</small></div>
-						</h5>
+							</h5>
 			    		<div style="height: 7rem">
 			    			<div>
 			    				{{c.description|truncatewords_html:15 }}
@@ -124,7 +125,7 @@
 
 				<div class="modal fade" id="modal-{{ c.id }}" tabindex="-1" role="dialog" aria-labelledby="modal-{{ c.id }}-Tittle" aria-hidden="true">
 					<div class="modal-dialog" role="document">
-						<div class="modal-content" style="width: 130%">
+						<div class="modal-content" style="width: 110%;">
 							<div class="modal-header" >
 								<h4 class="modal-title">
 									{{c.name}} <small class="text-muted">By {{c.provider}}</small>
