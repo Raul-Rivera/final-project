@@ -60,7 +60,7 @@
 					<div>
 						<h5 class="card-title">No courses available yet.</h5>
 				    	<p class="card-text">
-				    	Go to admin, please.
+				    	Go to admin to add courses, please.
 				    	</p>
 					</div>
 				</div>
@@ -88,7 +88,7 @@
 								{% if user.is_authenticated %}
 								<a href="{% url 'coursereview' idcourse=c.id %}#inicio" class="text-info font-weight-bold">Course Reviews</a>
 								{% else %}
-								<span class="text-info">Login to see reviews</span>
+								<span class="text-info">Sign in to see reviews</span>
 								{% endif %}
 
 					    		{% if not c.reviews.all %}
@@ -114,7 +114,7 @@
 						{% if user.is_authenticated %}
 				    	<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal-{{ c.id }}">See details</button>
 				    	{% else %}
-				    	<a href="{% url 'login' %}#inicio" class="text-info font-weight-bold">Login to see details</a>
+				    	<a href="{% url 'login' %}#inicio" class="text-info font-weight-bold">Sign in to see details</a>
 			    		{% endif %}
 			    	</div>
 				</div>
@@ -143,11 +143,11 @@
 								    	</p>
 									</div>
 									<div class="card-footer">
-										<strong>Price:</strong>&nbsp;
-										$&nbsp;<span id="modal-{{ c.id }}-coursePrice" value="{{ c.price }}">{{ c.price }}0</span>
+										<strong>Price:</strong>
+										$ <span id="modal-{{ c.id }}-coursePrice" value="{{ c.price }}">{{ c.price }}0</span>
 										&nbsp;&nbsp;
 										{% if c.maxFreeAdds > 0 %}
-										<span class="text-success">Hey! Select <span id="modal-{{ c.id }}-courseAdds" value="{{c.maxFreeAdds}}">{{c.maxFreeAdds}}</span> of {{c.maxFreeAdds}} free add(s).</span>
+										<span class="text-success">You can choose <span id="modal-{{ c.id }}-courseAdds" value="{{c.maxFreeAdds}}">{{c.maxFreeAdds}}</span> addition for free.</span>
 										{% endif %}
 									</div>
 									<input id="idcourse-{{ c.id }}" name="idcourse" value="{{ c.id }}" hidden>
@@ -156,7 +156,7 @@
 								{% if c.adds.all %}
 								<div class="form-group">
 									<div class="form-group">
-										<strong class="mb-2">Don't miss out on some of our free additions:</strong><br><br>
+										<strong class="mb-2">Additions available for this course.</strong><br><br>
 										{% with numcols=0 %}
 										<table class="addsTable">
 										<tr>
@@ -199,7 +199,7 @@
 								<h5 class="ml-2">
 									<small class="text-muted">No additions.</small>&nbsp;
 									{% if c.maxFreeAdds > 0 %}
-									<small class="text-danger">Please contact support, you must be offered {{c.maxFreeAdds}} free additions.</small>
+									<small class="text-danger">Please contact support, you must be offered {{c.maxFreeAdds}} free addition.</small>
 									{% endif%}
 
 								</h5>
