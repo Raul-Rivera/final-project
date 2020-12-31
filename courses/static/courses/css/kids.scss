@@ -1,0 +1,218 @@
+@media screen and (min-width: 320px) and (max-width: 575px) {
+	html, body { font-size: 11px !important;  }
+	.card-columns {	column-count: 1; }
+}
+
+
+@media screen and (min-width: 576px) and (max-width: 840px) {
+	html, body { font-size: 12px !important; }
+	.card-columns {	column-count: 1; }
+}
+
+
+@media screen and (min-width: 836px) and (max-width: 1229px) {
+	html, body { font-size: 14px; }
+	.card-columns {	column-count: 2; }
+}
+
+
+@media screen and (min-width: 1230px) and (max-width: 1621px) {
+	.card-columns {	column-count: 3; }
+}
+
+
+@media screen and (min-width: 1622px) and (max-width: 1920px) {
+	.card-columns {	column-count: 4; }
+}
+
+
+@media screen and  (min-width: 1921px) {
+	.card-columns {	column-count: 5; }
+}
+
+
+.ColorHeader { background-color: 0 }
+.ColorMain { background-color: #f2f2f2 }
+.ColorSection { background-color: #34495e }
+.ColorAside { background-color: #c0392b }
+.ColorFooter { background-color: 0}
+.peter-river-700 { color: #2874a6; }
+
+
+body {
+  background: url("/static/courses/image/kids.jpg") 0 no-repeat fixed;
+  background-size: cover;
+  background-size: contain
+  color: #05325c;
+  margin-right: 6%;
+  background-color: #c9b767;
+  margin-left: 6%;
+}
+
+
+header {
+    font-size: 23px;
+    height: 135px;
+    margin-bottom: 30px;
+    padding: 20px;
+    color: #05325c;
+}
+
+header h1, header h3 {
+    font-size: 46px;
+    margin-top: 5px;
+    display: inline-block;
+}
+
+
+article {
+    background-color: #34495e;
+    padding: 1em;
+    margin-left: 0.5em;
+    margin-right: 0;
+    border: 1px solid #a5bcc9;
+    display: block;
+    overflow-y: scroll;
+}
+
+
+table {
+    margin: 0;
+    padding: 0;
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+}
+
+table tr, table td {
+    margin: 0;
+    padding: 0;
+}
+
+table .addsTable th, table .addsTable td {
+    padding: 3px 1em;
+}
+
+
+footer {
+    width: 100%;
+    height: 60px;
+    color: #05325c;
+    padding: 10px;
+    margin-top: 50px;
+}
+
+
+small {
+    font-size: 0.7em;
+}
+
+
+.MyContainer {
+    width: 100%;
+    text-shadow: 0 0 0.2em #09ed11, 0 0 0.2em #09ed11;
+}
+
+
+.clear {
+    clear: both;
+    display: block;
+    height: 1em;
+    line-height: 1em;
+}
+
+
+.hidden2 {
+    animation-name: a_hidden;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+
+.visible2 {
+    animation-name: a_visible;
+    animation-duration: 1s;
+    animation-fill-mode: forwards;
+}
+
+
+#message_zone {
+    margin: 0;
+    padding-top: 0px;
+    font-style: italic;
+}
+
+
+.plusButton {
+    cursor: pointer;
+}
+
+.card .w18 {
+    width: 18rem !important;
+}
+
+.card-text {
+    height: 4rem;
+}
+
+.Categories {
+    padding: 1em;
+    color: #fff;
+    border: 1px solid #a5bcc9;
+    width: 100%;
+}
+
+.display-5 {
+    font-size: 150%;
+}
+
+.display-6 {
+    font-size: 110%;
+    font-weight: bold;
+}
+
+
+.starsBox #getUserRating {
+    display: inline;
+}
+.starsBox > i:hover {
+    cursor: pointer;
+    font-size: 18px;
+}
+.starsBox i.checked {
+    font-size: 18px;
+    color: #f2bf18;
+}
+.starsBox > button#clear {
+    padding-left: 1em;
+}
+
+.nounderline {
+    text-decoration: none !important;
+}
+
+
+@keyframes a_hidden {
+    0% {
+        opacity: 1;
+        height: 50px;
+    }
+
+    100% {
+        opacity: 0;
+        height: 0px;
+        visibility: hidden;
+        }
+}
+
+
+@keyframes a_visible {
+    0% {
+        opacity: 0;
+        height: 0px;
+    }
+    100% {
+        height: 50px;
+        opacity: 1;
+        }
+}
