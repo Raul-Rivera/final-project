@@ -125,11 +125,11 @@ virtualenv==20.0.26
 
 ## My opinion about this latest project: 🤓
 
-    _To complete the final project. I encountered a variety of problems that I had to deal with. Then, I outlined the main issues that would be involved in project completion and worked backward to break down the work that should be done at each stage_
+_To complete the final project. I encountered a variety of problems that I had to deal with. Then, I outlined the main issues that would be involved in project completion and worked backward to break down the work that should be done at each stage_
 
-    _I created a list of all the possible risks that could prevent me from reaching my goal, and then added some extra time to the schedule in case something unexpected came up. I also made sure to dedicate enough time to each part of the project according to its complexity. The project was completed on time, but looking back, I realize there were some issues that could have been avoided. For example, I would have avoided being so meticulous in design to avoid some of the minor programming problems I encountered. Having said that, it's always easier to see what it is that I learned after I complete the project, and now I know what I would do differently next time_
+_I created a list of all the possible risks that could prevent me from reaching my goal, and then added some extra time to the schedule in case something unexpected came up. I also made sure to dedicate enough time to each part of the project according to its complexity. The project was completed on time, but looking back, I realize there were some issues that could have been avoided. For example, I would have avoided being so meticulous in design to avoid some of the minor programming problems I encountered. Having said that, it's always easier to see what it is that I learned after I complete the project, and now I know what I would do differently next time_
 
-    _Also, I want to say that this project has been a challenge, with its complexities and errors, I learned a lot and I know that I will be able to apply what I learned in future projects oriented to this same field, I really enjoyed doing all the projects and it was a pleasure always listen to the videos and I was able to make what I had in mind come true, thanks for everything._
+_Also, I want to say that this project has been a challenge, with its complexities and errors, I learned a lot and I know that I will be able to apply what I learned in future projects oriented to this same field, I really enjoyed doing all the projects and it was a pleasure always listen to the videos and I was able to make what I had in mind come true, thanks for everything._
 
 ---
 ⌨️ with ❤️ from Raul J Rivera. 😊  🛠️
