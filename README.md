@@ -1,5 +1,5 @@
 
-# Final Project - CS50’s Web Programming with Python and JavaScript
+# Final Project - CS50’s Web Programming with Python and JavaScript.
 
 _Designing a online Kids Learning Web Application with Python and JavaScript._
 
