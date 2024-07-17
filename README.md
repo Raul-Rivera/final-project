@@ -11,15 +11,11 @@ _This Website was created with the purpose of providing educational online cours
 
 ## Requirements: 📌
 
-* Your web application must be sufficiently distinct from the other projects in this course (and, in addition, may not be based on the old CS50W Pizza project), and more complex than those.
+* This web application must utilize Django (including at least one model) on the back-end and JavaScript on the front-end.
 ```
 Meet this requirement
 ```
-* Your web application must utilize Django (including at least one model) on the back-end and JavaScript on the front-end.
-```
-Meet this requirement
-```
-* Your web application must be mobile-responsive.
+* This application must be mobile-responsive.
 ```
 Meet this requirement
 ```
